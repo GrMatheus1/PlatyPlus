@@ -108,6 +108,46 @@ def listar_estoque():
     print(estoqueProduto)
     return render_template('estoque.html', var_produtos=estoqueProduto)
 
+@app.route('/editarProduto/<int:id>', methods=['POST', 'GET'])
+def editarProduto(id):
+    produto = Produto.query.get(id)
+    if produto is None:
+        flash('Produto inexistente', 'error')
+        return redirect(url_for('listar_estoque'))
+
+    if request.method == 'POST':
+        form_data = request.form
+        produto.nome_produto = form_data['nome_produto']
+        produto.codigo_produto = form_data['codigo_produto']
+        produto.categoria_produto = form_data['categoria_produto']
+        produto.preco_produto = form_data['preco_produto']
+        produto.quantidade_produto = form_data['quantidade_produto']
+        produto.validade_produto = form_data['validade_produto']
+
+        try:
+            db_session.commit()
+            flash('Produto atualizado com sucesso!', 'success')
+        except Exception as e:
+            db_session.rollback()
+            flash('Erro ao atualizar produto: {}'.format(e), 'error')
+
+        return redirect(url_for('lista'))
+
+    return render_template('editar.html', produto=produto)
+
+
+@app.route('/deletarProduto/<int:id>', methods=['POST', 'GET'])
+def deletarProduto(id):
+    produto = select(Produto).where(Produto.produto_id == id)
+    print(produto)
+    produto_del = db_session.execute(produto).scalar()
+    print(produto_del)
+    produto_del.delete()
+    flash('Produto deletado com sucesso!', 'success')
+    return redirect(url_for('listar_estoque'))
+    # db_session.commit()
+
+
 
 @app.route('/detalhes', methods=['PUT'])
 def listar_detalhe():
