@@ -1,0 +1,99 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #84Cf9a;
+
+}
+
+main {
+    grid-area: f;
+    height: 737px;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+}
+
+a {
+    font-size: 20px;
+}
+.submit > button {
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #00A42C;
+    font-size: 18px;
+    border-radius: 19px;
+    margin-left: 210px ;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    width: 160px;
+    height: 45px;
+}
+
+
+ul > li{
+    font-size: 20px;
+    color: gray;
+    list-style-type: none;
+}
+
+
+h1 {
+    color: black;
+    padding-top: 60px;
+    font-size: 34px;
+}
+
+::placeholder {
+    color: rgb(159, 153, 153);
+    font-size: 20px;
+}
+
+form>input {
+    background-color: #ffffff;
+    border-radius: 20px;
+    font-size: 20px;
+    padding: 25px;
+    margin-top: 40px;
+    height: 20px;
+    width: 80%;
+}
+
+form {
+    background-color: #ffffff;
+    box-shadow: 21px 22px 20px rgba(0, 0, 0, 0.2);
+    font-size: 35px;
+    width: 600px;
+    text-align: center;
+    padding: 10px;
+    row-gap: 25px;
+    border-radius: 26px;
+}
+
+.logo {
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    width: 30%;
+    height: 20vh;
+    margin: 130px;
+
+
+}
+
+@media(max-width:860px) {
+
+    main {
+        display: flex;
+        justify-content: center;
+    }
+    .logo{
+        display: none;
+    }
+
+}

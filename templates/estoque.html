@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estoque</title>
+    <link rel="stylesheet" href="/static/estoque.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <body>
+        <div class="container">
+            <header>
+                <div class="logo">
+                    <img src="/static/img/PlatyPlusWhite.png" alt="">
+                </div>
+            </header>
+            <nav>
+                <div class="home">
+                    <a href="{{ url_for('inicial') }}">
+                        <i class="bi bi-house-fill"></i>
+                        <p>Home</p>
+                    </a>
+                </div>
+                <div class="list">
+                    <a href="{{ url_for('lista') }}">
+                        <i class="bi bi-bag-fill"></i>
+                        <p>Produtos</p>
+                    </a>
+                </div>
+                <div class="add">
+                    <a href="{{ url_for('cadastrar_produto') }}">
+                        <i class="bi bi-plus-circle"></i>
+                        <p>Add Produto</p>
+                    </a>
+                </div>
+
+            </nav>
+
+            <main>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>PRODUTO:</th>
+                        <th>CÓDIGO:</th>
+                        <th>QUANTIDADE:</th>
+                        <th>CATEGORIA:</th>
+                        <th>PREÇO:</th>
+                        <th>DATA:</th>
+                        <th>AÇÕES</th>
+                    </tr>
+                    <tbody>
+                {% for produto in var_produtos %}
+                    <tr>
+                        <td>{{ produto.nome_produto }}</td>
+                        <td>{{ produto.codigo_produto }}</td>
+                        <td>{{ produto.quantidade_produto }}</td>
+                        <td>{{ produto.categoria_produto }}</td>
+                        <td>{{ produto.preco_produto }}</td>
+                        <td>{{ produto.validade_produto }}</td>
+                        <td class="actions">
+                            <a href="#"><i class="bi bi-trash3"></i></a>
+                            <a href="#"><i class="bi bi-pencil"></i></a>
+                        </td>
+                {% endfor %}
+                </tr>
+                </tbody>
+                </table>
+            </main>
+        </div>
+    </body>
+</html>

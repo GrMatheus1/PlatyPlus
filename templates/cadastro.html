@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de usuário</title>
+    <link rel="stylesheet" href="/static/cadastro.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com"&gt;>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+    <div class="container">
+
+        <main>
+            <form action="{{ url_for('cadastrar_funcionario') }}" method="POST">
+                <h1>Cadastro</h1>
+                <input name="nome_funcionario" class="Nome" type="text" placeholder="   Nome:">
+                <input name="email_funcionario" class="Email" type="email" placeholder="   Email:">
+                <input name="senha_funcionario" class="Senha" type="password" placeholder="   Senha:">
+                <button class="Entrar">Entrar</button>
+            </form>
+        </main>
+        <aside>
+            <img class="logo" src="/static/img/PlatyPlusWhite.png" alt="">
+        </aside>
+    </div>
+
+</body>
+</html>
