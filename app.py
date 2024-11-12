@@ -141,7 +141,7 @@ def editarProduto(id):
             db_session.rollback()
             flash('Erro ao atualizar produto: {}'.format(e), 'error')
 
-        return redirect(url_for('lista'))
+        return redirect(url_for('historico'))
 
     return render_template('editar.html', produto=produto)
 

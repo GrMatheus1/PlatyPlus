@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Movimentação</title>
+    <link rel="stylesheet" href="/static/movimentacao.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a href="{{ url_for('inicial') }}">
+            <img src="/static/img/PlatyPlusWhite.png">
+            </a>
+        </header>
+        <main>
+            <div id="divmae">
+                <h1> Movimentar Produtos </h1>
+                <form id="formulario" action="{{ url_for('movimentacaoProduto') }}" method="POST">
+                    <select name="produto_id">
+                        <option value="">Selecione um produto:</option>
+                        {% for produto in var_produtos %}
+                            <option value="{{ produto.produto_id }}">{{ produto.nome_produto }}</option>
+                        {% endfor %}
+                    </select>
+                    <select name="funcionario_id">
+                        <option value="">Funcionário que fez a movimentação:</option>
+                        {% for funcionario in var_funcionario %}
+                            <option value="{{ funcionario.funcionario_id }}">{{ funcionario.nome_funcionario }}</option>
+                        {% endfor %}
+                    </select>
+                    <input type="number" name="quantidade_movimentacao" placeholder="Quantidade:">
+                    <input type="date" name="data_de_movimentacao">
+                    <select name="tipo_movimentacao">
+                        <option value="none">Selecione o tipo de movimentação:</option>
+                        <option value=1>Entrada</option>
+                        <option value=0>Saída</option>
+                    </select>
+                    <button>Cadastrar</button>
+                </form>
+                <footer>
+                </footer>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

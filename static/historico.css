@@ -30,6 +30,10 @@ header {
   height: 60px;
 }
 
+img{
+  height: 60px;
+}
+
 .box {
   background-color: #ffffff;
   display: flex;
