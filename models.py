@@ -1,6 +1,5 @@
-from sqlalchemy import create_engine, Column, Integer, String, ForeignKey
+from sqlalchemy import create_engine, Column, Integer, String, ForeignKey, Boolean
 from sqlalchemy.orm import sessionmaker, scoped_session, declarative_base, relationship
-from sqlalchemy.testing import db
 
 engine = create_engine('sqlite:///PlatyPlus.sqlite3')
 db_session = scoped_session(sessionmaker(bind=engine))
@@ -51,39 +50,6 @@ class Produto(Base):
                                                         self.validade_produto)
 
 
-class Movimentacao(Base):
-    __tablename__ = 'movimentacoes'
-    id_movimentacao = Column(Integer, primary_key=True)
-    data_de_movimentacao = Column(String(8), nullable=False, index=True)
-    data = Column(String(8), nullable=False, index=True)
-    # chave estrangeira
-    produto_id = Column(Integer, ForeignKey('produtos.produto_id'))
-    produtos = relationship(Produto)
-
-    def save(self):
-        db_session.add(self)
-        db_session.commit()
-
-    def delete(self):
-        db_session.delete(self)
-        db_session.commit()
-
-    def serialize_movimentacao(self):
-        dados_movimentacao = {
-            'id_movimentacao': self.id_movimentacao,
-            'data_de_movimentacao': self.data_de_movimentacao,
-            'data': self.data,
-            'produto_id': self.produto_id,
-        }
-        return dados_movimentacao
-
-    def __repr__(self):
-        return '<Produto: {} {} {} {}>'.format(self.id_movimentacao,
-                                               self.data_de_movimentacao,
-                                               self.data,
-                                               self.produto_id)
-
-
 class Funcionario(Base):
     __tablename__ = 'funcionarios'
     funcionario_id = Column(Integer, primary_key=True, unique=True)
@@ -114,6 +80,46 @@ class Funcionario(Base):
         return '<Funcionario: {} {} {}>'.format(self.nome_funcionario,
                                                 self.email_funcionario,
                                                 self.senha_funcionario)
+
+
+class Movimentacao(Base):
+    __tablename__ = 'movimentacoes'
+    id_movimentacao = Column(Integer, primary_key=True)
+    data_de_movimentacao = Column(String(10), nullable=False, index=True)
+    quantidade_movimentacao = Column(Integer, nullable=False, index=True)
+    tipo_movimentacao = Column(Boolean, nullable=True)
+    # chave estrangeira
+    produto_id = Column(Integer, ForeignKey('produtos.produto_id'))
+    produtos = relationship(Produto)
+    funcionario_id = Column(Integer, ForeignKey('funcionarios.funcionario_id'))
+    funcionarios = relationship(Funcionario)
+
+    def save(self):
+        db_session.add(self)
+        db_session.commit()
+
+    def delete(self):
+        db_session.delete(self)
+        db_session.commit()
+
+    def serialize_movimentacao(self):
+        dados_movimentacao = {
+            'id_movimentacao': self.id_movimentacao,
+            'data_de_movimentacao': self.data_de_movimentacao,
+            'quantidade_movimentacao': self.quantidade_movimentacao,
+            'tipo_movimentacao': self.tipo_movimentacao,
+            'produto_id': self.produto_id,
+            'funcionario_id': self.funcionario_id
+        }
+        return dados_movimentacao
+
+    def __repr__(self):
+        return '<Produto: {} {} {} {} {} {}>'.format(self.id_movimentacao,
+                                                     self.data_de_movimentacao,
+                                                     self.quantidade_movimentacao,
+                                                     self.tipo_movimentacao,
+                                                     self.produto_id,
+                                                     self.funcionario_id)
 
 
 def init_db():

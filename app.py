@@ -1,7 +1,8 @@
 from sqlalchemy import select
+from sqlalchemy.testing import db
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from models import db_session, Funcionario, Produto
+from models import db_session, Funcionario, Produto, Movimentacao
 from flask import flash, url_for, Flask, render_template, redirect, request, session
 from flask_restful import Api
 
@@ -83,19 +84,18 @@ def cadastrar_produto():
             form_evento.save()
             db_session.close()
             flash("Evento cadastrado!!!", "success")
-            return redirect(url_for('lista'))
+            return redirect(url_for('historico'))
     return render_template('produto.html')
 
-
-@app.route('/lista')
-def lista():
-    lista_produtos = select(Produto).select_from(Produto)
-    lista_produtos = db_session.execute(lista_produtos).scalars()
-    listaProdutos = []
-    for produto in lista_produtos:
-        listaProdutos.append(produto.serialize_produto())
-    print(listaProdutos)
-    return render_template('lista.html', var_produtos=listaProdutos)
+@app.route('/historico')
+def historico():
+    lista_movimentacoes = select(Movimentacao).select_from(Movimentacao)
+    lista_movimentacoes = db_session.execute(lista_movimentacoes).scalars()
+    listaMovimentacoes = []
+    for movimentacoes in lista_movimentacoes:
+        listaMovimentacoes.append(movimentacoes.serialize_movimentacao())
+    print(listaMovimentacoes)
+    return render_template('historico.html', var_movimentacao=listaMovimentacoes)
 
 
 @app.route('/estoque')
@@ -107,6 +107,16 @@ def listar_estoque():
         estoqueProduto.append(produto.serialize_produto())
     print(estoqueProduto)
     return render_template('estoque.html', var_produtos=estoqueProduto)
+
+@app.route('/funcionario/lista')
+def funcionario():
+    lista_funcionario = select(Funcionario).select_from(Funcionario)
+    lista_funcionario = db_session.execute(lista_funcionario).scalars()
+    listaFuncionario = []
+    for funcionario in lista_funcionario:
+        listaFuncionario.append(funcionario.serialize_funcionario())
+    print(listaFuncionario)
+    return render_template('funcionario.html', var_funcionarios=listaFuncionario)
 
 @app.route('/editarProduto/<int:id>', methods=['POST', 'GET'])
 def editarProduto(id):
@@ -147,18 +157,48 @@ def deletarProduto(id):
     return redirect(url_for('listar_estoque'))
     # db_session.commit()
 
+@app.route('/movimentacaoProduto', methods=['POST', "GET"])
+def movimentacaoProduto():
+    if request.method == 'POST':
+        if not request.form['produto_id']:
+            flash("Escolha um produto para cadastrar uma entrada no estoque!", "error")
+        if not request.form['funcionario_id']:
+            flash("Informe o funcionário que está movimentando!", "error")
+        if not request.form['quantidade_movimentacao']:
+            flash("Informe quantos produtos foram inseridos no estoque!", "error")
+        if not request.form['data_de_movimentacao']:
+            flash("Informe a data da movimentação!", "error")
+        if not request.form['tipo_movimentacao']:
+            flash("Informe o tipo de movimentacao!", "error")
 
+        else:
+            form_evento = Movimentacao(produto_id=int(request.form['produto_id']),
+                                       funcionario_id=int(request.form['funcionario_id']),
+                                       quantidade_movimentacao=int(request.form['quantidade_movimentacao']),
+                                       data_de_movimentacao=request.form['data_de_movimentacao'],
+                                       tipo_movimentacao=bool(int(request.form['tipo_movimentacao'])))
+            print(form_evento)
+            form_evento.save()
+            db_session.close()
+            flash("Movimentação de Produto Cadastrada!", "success")
+            return redirect(url_for('movimentacaoProduto'))
 
-@app.route('/detalhes', methods=['PUT'])
-def listar_detalhe():
-    detalhe_produtos = select(Produto).select_from(Produto)
-    detalhe_produtos = db_session.execute(detalhe_produtos).scalars()
-    detalheProduto = []
-    for produto in detalhe_produtos:
-        detalheProduto.append(produto.serialize_produto())
-    print(detalheProduto)
-    return render_template('detalhe.html', var_produtos=detalheProduto)
+    # Recupera a lista de funcionários
+    lista_funcionarios = select(Funcionario).select_from(Funcionario)
+    lista_funcionarios = db_session.execute(lista_funcionarios).scalars()
+    listaFuncionarios = []
+    for funcionario in lista_funcionarios:
+        listaFuncionarios.append(funcionario.serialize_funcionario())
 
+    # Recupera a lista de produtos
+    lista_produtos = select(Produto).select_from(Produto)
+    lista_produtos = db_session.execute(lista_produtos).scalars()
+    listaProdutos = []
+    for produto in lista_produtos:
+        listaProdutos.append(produto.serialize_produto())
+
+        # Renderiza o template com as listas de funcionários e produtos
+    return render_template('movimentacao.html', var_funcionario=listaFuncionarios, var_produtos=listaProdutos)
 
 if __name__ == '__main__':
     app.run(debug=True)

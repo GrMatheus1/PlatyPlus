@@ -144,13 +144,25 @@
             <div class="prod">
                 <button>
                     <i class="bi bi-bag-fill" style="color: white;"></i>
-                    <a href="{{ url_for('lista') }}" style="color: white;">Produtos</a>
+                    <a href="{{ url_for('historico') }}" style="color: white;">Produtos</a>
+                </button>
+            </div>
+            <div class="func">
+                <button>
+                    <i class="bi bi-person-fill-check" style="color: white;"></i>
+                    <a href="{{ url_for('funcionario') }}" style="color: white;">Funcionario</a>
                 </button>
             </div>
             <div class="estq">
                 <button>
                     <i class="bi bi-list-ol" style="color: white;"></i>
                     <a href="{{ url_for('listar_estoque') }}" style="color: white;">Estoque</a>
+                </button>
+            </div>
+            <div class="mov">
+                <button>
+                    <i class="bi-arrows-move" style="color: white;"></i>
+                    <a href="{{ url_for('movimentacaoProduto') }}" style="color: white;">Movimentação</a>
                 </button>
             </div>
             <div class="exit">

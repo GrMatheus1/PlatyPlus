@@ -112,11 +112,11 @@ nav > .list {
 nav > .list > a{
     display: flex;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: space-between;
     color: #ffffff;
     font-family: normal, serif;
     width: 30%;
-    margin-right: 155px;
+    margin-right: 133px;
     margin-top: 20px;
     font-size: 17px;
 }
@@ -140,7 +140,9 @@ table {
     width: 100%;
 
 }
-
+.categoria{
+    color: white;
+}
 td{
     text-align: center;
     align-items: center;

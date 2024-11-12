@@ -9,8 +9,9 @@ header {
     width: 100%; /* Garante que o header ocupe 100% da largura */
 }
 
-header>img {
-    margin-left: 20px;
+header>a>img {
+    margin-left: 40px;
+    margin-top: 20px;
 }
 
 #logo {

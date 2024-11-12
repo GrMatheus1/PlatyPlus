@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista</title>
+    <link rel="stylesheet" href="/static/historico.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+</head>
+
+<body>
+<header>
+    <div class="logo">
+        <a href="{{ url_for('inicial') }}">
+            <img src="/static/img/PlatyPlusWhite.png">
+        </a>
+    </div>
+</header>
+
+<div class="container">
+    <h1>LISTA DE PRODUTOS</h1>
+    <div class="box">
+        <form class="search-container">
+            <input type="text" id="search-bar" placeholder="Pesquisar produto">
+            <i class="bi bi-search"></i>
+        </form>
+
+        <table>
+            <tr class="categorias">
+                <th class="id">Id</th>
+                <th class="id">Data</th>
+                <th class="id">Quantidade</th>
+                <th class="id">Entrada/Saída</th>
+                <th class="id">Produto</th>
+                <th class="id">Funcionário</th>
+                {% for movimentacao in var_movimentacao %}
+                    <tr>
+                        <td>{{ movimentacao.id_movimentacao }}</td>
+                        <td>{{ movimentacao.data_de_movimentacao }}</td>
+                        <td>{{ movimentacao.quantidade_movimentacao }}</td>
+                        <td>
+                            {% if movimentacao.tipo_movimentacao == True %}
+                                <img src="/static/img/entrada.png">
+                            {% elif movimentacao.tipo_movimentacao == False %}
+                                <img src="/static/img/saida.png">
+                            {% else %}
+                                <span> Nenhuma movimentação encontrada! </span>
+                            {% endif %}
+                        </td>
+                        <td>{{ movimentacao.produto_id }}</td>
+                        <td>{{ movimentacao.funcionario_id }}</td>
+                    </tr>
+                {% endfor %}
+            </tr>
+        </table>
+    </div>
+</div>
+</body>
+
+</html>

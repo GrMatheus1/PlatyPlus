@@ -22,7 +22,7 @@
                     </a>
                 </div>
                 <div class="list">
-                    <a href="{{ url_for('lista') }}">
+                    <a href="{{ url_for('historico') }}">
                         <i class="bi bi-bag-fill"></i>
                         <p>Produtos</p>
                     </a>
@@ -39,15 +39,16 @@
             <main>
                 <table>
                     <thead>
-                    <tr>
-                        <th>PRODUTO:</th>
-                        <th>CÓDIGO:</th>
-                        <th>QUANTIDADE:</th>
-                        <th>CATEGORIA:</th>
-                        <th>PREÇO:</th>
-                        <th>DATA:</th>
-                        <th>AÇÕES</th>
-                    </tr>
+                        <tr class="categoria">
+                            <th>PRODUTO:</th>
+                            <th>CÓDIGO:</th>
+                            <th>QUANTIDADE:</th>
+                            <th>CATEGORIA:</th>
+                            <th>PREÇO:</th>
+                            <th>DATA:</th>
+                            <th>AÇÕES:</th>
+                        </tr>
+                    </thead>
                     <tbody>
                 {% for produto in var_produtos %}
                     <tr>

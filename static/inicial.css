@@ -112,11 +112,31 @@ nav > .estq > button{
     margin-top: 20px;
 }
 
+nav > .mov{
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+nav > .mov > button{
+    display: flex;
+    background-color: transparent;
+    border-color: transparent;
+    align-items: center;
+    justify-content: space-evenly;
+    color: white;
+    font-family: normal, serif;
+    font-size: medium;
+    width: 50%;
+    margin-left: 33px;
+    margin-top: 20px;
+}
+
 nav>.exit {
     width: 100%;
     display: flex;
     margin-left: 40px;
-    margin-top: 290px;
+    margin-top: 260px;
 }
 
 nav > .exit > button{
