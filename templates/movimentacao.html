@@ -16,6 +16,11 @@
         </header>
         <main>
             <div id="divmae">
+                <div class="esc">
+                    <a href="{{ url_for('inicial') }}">
+                        <i class="bi bi-escape"></i>
+                    </a>
+                </div>
                 <h1> Movimentar Produtos </h1>
                 <form id="formulario" action="{{ url_for('movimentacaoProduto') }}" method="POST">
                     <select name="produto_id">

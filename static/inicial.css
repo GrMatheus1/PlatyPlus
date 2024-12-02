@@ -42,52 +42,37 @@ nav>.perfil {
     align-items: center;
     justify-content: center;
 }
-
 nav > .perfil > i {
     color: white;
     font-size: 45px;
     margin-right: 10px ;
 }
 
-nav>.home {
+
+
+nav>.hist {
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-nav > .home > button{
-    display: flex;
-    background-color: transparent;
-    border-color: transparent;
-    align-items: center;
-    justify-content: space-evenly;
-    color: white;
-    font-family: normal, serif;
-    font-size: medium;
-    width: 30%;
-    margin-right: 110px;
-}
-
-nav>.prod {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-nav > .prod > button {
+nav > .hist > button {
     display: flex;
     background-color: transparent;
     border-color: transparent;
     width: 35%;
     align-items: center;
-    justify-content: space-evenly;
     color: white;
     font-family: normal, serif;
     font-size: medium;
+
     margin-right: 95px;
     margin-top: 20px;
+}
+
+.bi.bi-bag-fill{
+    margin-right: 5px;
 }
 
 nav>.func {
@@ -103,12 +88,14 @@ nav > .func > button {
     border-color: transparent;
     width: 35%;
     align-items: center;
-    justify-content: space-evenly;
     color: white;
     font-family: normal, serif;
     font-size: medium;
-    margin-right: 95px;
+    margin-right: 100px;
     margin-top: 20px;
+}
+.bi.bi-person-fill-check{
+    margin-right: 5px;
 }
 
 nav>.estq {
@@ -123,13 +110,15 @@ nav > .estq > button{
     background-color: transparent;
     border-color: transparent;
     align-items: center;
-    justify-content: space-evenly;
     color: white;
     font-family: normal, serif;
     font-size: medium;
     width: 35%;
     margin-right: 98px;
     margin-top: 20px;
+}
+.bi.bi-list-ol{
+    margin-right: 5px;
 }
 
 nav > .mov{
@@ -143,7 +132,6 @@ nav > .mov > button{
     background-color: transparent;
     border-color: transparent;
     align-items: center;
-    justify-content: space-evenly;
     color: white;
     font-family: normal, serif;
     font-size: medium;
@@ -151,11 +139,13 @@ nav > .mov > button{
     margin-left: 33px;
     margin-top: 20px;
 }
-
+.bi-arrows-move{
+    margin-right: 5px;
+}
 nav>.exit {
     width: 100%;
     display: flex;
-    margin-left: 40px;
+    margin-left: 30px;
     margin-top: 200px;
 }
 
@@ -179,12 +169,11 @@ nav>.add {
     flex-direction: column;
     align-items: center;
 }
-
 nav > .add > button{
     display: flex;
     background-color: transparent;
     border-color: transparent;
-    width: 40%;
+    width: 50%;
     align-items: center;
     color: white;
     font-family: normal, serif;
@@ -192,7 +181,6 @@ nav > .add > button{
     margin-right: 65px;
     margin-top: 20px;
 }
-
 .bi.bi-plus-circle{
     margin-right: 5px;
 }

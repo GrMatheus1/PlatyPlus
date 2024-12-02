@@ -49,6 +49,11 @@ img{
   font-size: 20px;
 }
 
+.esc {
+  width: 100%;
+  display: flex;
+  margin-top: 30px;
+}
 form>i {
   padding: 12px;
   position: absolute;

@@ -49,13 +49,26 @@ def cadastrar_funcionario():
 
 @app.route('/inicial')
 def inicial():
-    inicial_funcionario = select(Funcionario).select_from(Funcionario)
-    inicial_funcionario = db_session.execute(inicial_funcionario).scalars()
-    inicialFuncionario = []
-    for funcionario in inicial_funcionario:
-        inicialFuncionario.append(funcionario.serialize_funcionario())
-    print(inicialFuncionario)
-    return render_template('inicial.html', var_funcionario=inicialFuncionario)
+
+    estoque_produtos = select(Produto).select_from(Produto)
+    estoque_produtos = db_session.execute(estoque_produtos).scalars()
+    estoqueProduto = []
+    for produto in estoque_produtos:
+        estoqueProduto.append(produto.serialize_produto())
+    print(estoqueProduto)
+
+    return render_template('inicial.html',lista_produtos=estoqueProduto)
+
+@app.route('/funcionarioInicial/<int:id>', methods=['POST', 'GET'])
+def funcionárioInicial(id):
+    funcionário = select(Funcionario).where(Funcionario.funcionario_id == id)
+    print(funcionário)
+    funcionario_sel = db_session.execute(funcionário).scalar()
+    print(funcionario_sel)
+
+    flash('Produto deletado com sucesso!', 'success')
+    return redirect(url_for('listar_estoque'))
+    # db_session.commit()
 
 
 @app.route('/produto/cadastrar', methods=['POST', 'GET'])
@@ -84,7 +97,7 @@ def cadastrar_produto():
             form_evento.save()
             db_session.close()
             flash("Evento cadastrado!!!", "success")
-            return redirect(url_for('historico'))
+            return redirect(url_for('listar_estoque'))
     return render_template('produto.html')
 
 @app.route('/historico')
