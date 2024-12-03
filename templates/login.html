@@ -17,6 +17,15 @@
 
     <form id="formulario" action="{{ url_for('login') }}" method="POST">
         <h1>Login</h1>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <ul>
+                    {% for category, message in messages %}
+                        <li class="{{ category }}">{{ message }}</li>
+                    {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
         <input type="text" name="email_funcionario" placeholder="  E-mail:" required>
         <input type="password" name="senha_funcionario" placeholder="  Senha:" required>
         <div class="submit">

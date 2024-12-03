@@ -2,7 +2,7 @@ from sqlalchemy import select
 from sqlalchemy.testing import db
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from models import db_session, Funcionario, Produto, Movimentacao
+from models import db_session, Funcionario, Produto, Movimentacao, Categoria
 from flask import flash, url_for, Flask, render_template, redirect, request, session
 from flask_restful import Api
 
@@ -80,7 +80,7 @@ def cadastrar_produto():
             flash("Preencher o quantidade", "error")
         if not request.form["codigo_produto"]:
             flash("Preencher o codigo", "error")
-        if not request.form["categoria_produto"]:
+        if not request.form["id_categoria"]:
             flash("Preencher o categoria", "error")
         if not request.form["preco_produto"]:
             flash("Preencher o preco", "error")
@@ -90,7 +90,7 @@ def cadastrar_produto():
             form_evento = Produto(nome_produto=request.form["nome_produto"],
                                   quantidade_produto=int(request.form["quantidade_produto"]),
                                   codigo_produto=request.form["codigo_produto"],
-                                  categoria_produto=request.form["categoria_produto"],
+                                  id_categoria=int(request.form["id_categoria"]),
                                   preco_produto=request.form["preco_produto"],
                                   validade_produto=request.form["validade_produto"])
             print(form_evento)
@@ -98,7 +98,27 @@ def cadastrar_produto():
             db_session.close()
             flash("Evento cadastrado!!!", "success")
             return redirect(url_for('listar_estoque'))
-    return render_template('produto.html')
+    lista_categorias = select(Categoria).select_from(Categoria)
+    lista_categorias = db_session.execute(lista_categorias).scalars()
+    listaCategorias = []
+    for categoria in lista_categorias:
+        listaCategorias.append(categoria.serialize_categoria())
+    print(listaCategorias)
+    return render_template('produto.html', var_categoria=listaCategorias)
+
+@app.route('/categoria/cadastrar', methods=['POST', 'GET'])
+def cadastrar_categoria():
+    if request.method == "POST":
+        if not request.form["nome_categoria"]:
+            flash("Preencher o nome", "error")
+        else:
+            form_evento = Categoria(nome_categoria=request.form["nome_categoria"])
+            print(form_evento)
+            form_evento.save()
+            db_session.close()
+            flash("Categoria cadastrado!!!", "success")
+            return redirect(url_for('listar_estoque'))
+    return render_template('categoria.html')
 
 @app.route('/historico')
 def historico():
@@ -144,17 +164,25 @@ def editarProduto(id):
         produto.codigo_produto = form_data['codigo_produto']
         produto.categoria_produto = form_data['categoria_produto']
         produto.preco_produto = form_data['preco_produto']
-        produto.quantidade_produto = form_data['quantidade_produto']
+        try:
+            nova_quantidade = int(form_data['quantidade_produto'])
+            if nova_quantidade < 0:
+                flash('A quantidade não pode ser negativa.', 'error')
+                return redirect(url_for('editarProduto', id=id))  # Redireciona para a mesma página
+            produto.quantidade_produto = nova_quantidade
+        except ValueError:
+            flash('Quantidade inválida. Por favor, insira um número inteiro.', 'error')
+            return redirect(url_for('editarProduto', id=id))  # Redireciona para a mesma página
         produto.validade_produto = form_data['validade_produto']
 
         try:
             db_session.commit()
-            flash('Produto atualizado com sucesso!', 'success')
+            flash('Produto atualizado com sucesso', 'success')
         except Exception as e:
             db_session.rollback()
             flash('Erro ao atualizar produto: {}'.format(e), 'error')
 
-        return redirect(url_for('historico'))
+        return redirect(url_for('listar_estoque'))
 
     return render_template('editar.html', produto=produto)
 

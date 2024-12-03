@@ -8,13 +8,38 @@ Base = declarative_base()
 Base.query = db_session.query_property()
 
 
+class Categoria(Base):
+    __tablename__ = 'categorias'
+    id_categoria = Column(Integer, primary_key=True, unique=True)
+    nome_categoria = Column(String(40), nullable=True, unique=True)
+
+    def save(self):
+        db_session.add(self)
+        db_session.commit()
+
+    def delete(self):
+        db_session.delete(self)
+        db_session.commit()
+
+    def serialize_categoria(self):
+        dados_categoria = {
+            'id_categoria': self.id_categoria,
+            'nome_categoria': self.nome_categoria,
+        }
+        return dados_categoria
+
+    def __repr__(self):
+        return '<Categorias: {} {}>'.format(self.id_categoria,
+                                            self.nome_categoria)
+
+
 class Produto(Base):
     __tablename__ = 'produtos'
     produto_id = Column(Integer, primary_key=True, unique=True)
     nome_produto = Column(String(80), nullable=False, index=True)
     quantidade_produto = Column(Integer, nullable=False, index=True)
     codigo_produto = Column(String(40), nullable=False, index=True)
-    categoria_produto = Column(String(40), nullable=False, index=True)
+    id_categoria = Column(Integer, ForeignKey('categorias.id_categoria'))
     preco_produto = Column(String(40), nullable=False, index=True)
     validade_produto = Column(String(10), nullable=False, index=True)
 
@@ -34,7 +59,7 @@ class Produto(Base):
             "nome_produto": self.nome_produto,
             "quantidade_produto": self.quantidade_produto,
             "codigo_produto": self.codigo_produto,
-            "categoria_produto": self.categoria_produto,
+            "id_categoria": self.id_categoria,
             "preco_produto": self.preco_produto,
             "validade_produto": self.validade_produto
         }
@@ -45,7 +70,7 @@ class Produto(Base):
                                                         self.nome_produto,
                                                         self.quantidade_produto,
                                                         self.codigo_produto,
-                                                        self.categoria_produto,
+                                                        self.id_categoria,
                                                         self.preco_produto,
                                                         self.validade_produto)
 
@@ -120,7 +145,6 @@ class Movimentacao(Base):
                                                      self.tipo_movimentacao,
                                                      self.produto_id,
                                                      self.funcionario_id)
-
 
 def init_db():
     Base.metadata.create_all(bind=engine)

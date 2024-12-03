@@ -64,7 +64,13 @@
 
                 <div class="input-container">
                     <label for="produto3">Categoria:</label>
-                    <input type="text" id="produto3" name="categoria_produto">
+                    <select name="id_categoria">
+                        <option value="">Selecione uma categoria: <option>
+                        {% for categoria in var_categoria %}
+                            <option value="{{categoria.id_categoria}}">{{categoria.nome_categoria}}</option>
+                        {% endfor %}
+                    </select>
+
                 </div>
 
 
