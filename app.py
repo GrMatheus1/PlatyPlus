@@ -49,12 +49,14 @@ def cadastrar_funcionario():
 
 @app.route('/inicial')
 def inicial():
-
-    estoque_produtos = select(Produto).select_from(Produto)
-    estoque_produtos = db_session.execute(estoque_produtos).scalars()
+    estoque_produtos = select(Produto, Categoria).join(Categoria, Categoria.id_categoria == Produto.id_categoria)
+    estoque_produtos = db_session.execute(estoque_produtos).fetchall()
     estoqueProduto = []
-    for produto in estoque_produtos:
-        estoqueProduto.append(produto.serialize_produto())
+    for produto, categoria in estoque_produtos:
+        estoqueProduto.append({
+            "quantidade_produto": produto.quantidade_produto,
+            "nome_categoria": categoria.nome_categoria,
+        })
     print(estoqueProduto)
 
     return render_template('inicial.html',lista_produtos=estoqueProduto)

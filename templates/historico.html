@@ -20,6 +20,15 @@
 </header>
 
 <div class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul>
+                {% for category, message in messages %}
+                    <li class="{{ category }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
     <h1>HISTÓRICO</h1>
     <div class="box">
         <div class="esc">
@@ -27,12 +36,6 @@
                 <i class="bi bi-escape"></i>
             </a>
         </div>
-
-        <form class="search-container">
-            <input type="text" id="search-bar" placeholder="Pesquisar produto">
-            <i class="bi bi-search"></i>
-        </form>
-
         <table>
             <tr class="categorias">
                 <th class="id">Id</th>

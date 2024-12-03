@@ -40,6 +40,7 @@ class Produto(Base):
     quantidade_produto = Column(Integer, nullable=False, index=True)
     codigo_produto = Column(String(40), nullable=False, index=True)
     id_categoria = Column(Integer, ForeignKey('categorias.id_categoria'))
+    categorias = relationship(Categoria)
     preco_produto = Column(String(40), nullable=False, index=True)
     validade_produto = Column(String(10), nullable=False, index=True)
 

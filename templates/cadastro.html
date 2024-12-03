@@ -14,6 +14,15 @@
         <main>
             <form action="{{ url_for('cadastrar_funcionario') }}" method="POST">
                 <h1>Cadastro</h1>
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        <ul>
+                            {% for category, message in messages %}
+                            <li class="{{ category }}">{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                {% endwith %}
                 <input name="nome_funcionario" class="Nome" type="text" placeholder="   Nome:">
                 <input name="email_funcionario" class="Email" type="email" placeholder="   Email:">
                 <input name="senha_funcionario" class="Senha" type="password" placeholder="   Senha:">
